@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 from Scanner.utils.filters import command
-from  Scanner.vars import SUDO_USERS, SUPPORT_CHAT
+from Scanner.vars import SUPPORT_CHAT
 from Scanner import BOT_USERNAME, starttime
 
 START_TIME = datetime.utcnow()
@@ -24,9 +24,9 @@ async def start_(client: Client, message: Message):
     await message.reply_text(
         f"""ᴡᴇʟᴄᴏᴍᴇ : {message.from_user.mention()}
 
-I am a @SurveyCorpsXteam Scanner, I can Gban users in muiltiple bots at the same time.
+I am a scanner, use me to gban user in muiltiple bots at the same time.
 
-Usage: 
+Usage:
     /start
     /scan -id (id) -r (reason)  -p (proof link)
     /revert -id (id)
@@ -40,9 +40,9 @@ Usage:
             [
                 [
                     InlineKeyboardButton(
-                        "👹Help👹", url=f"https://t.me/{SUPPORT_CHAT}"),
+                        "🆘 ʜᴇʟᴘ", url=f"https://t.me/{SUPPORT_CHAT}"),
                     InlineKeyboardButton(
-                        "👺Add Me To Your Chat👺", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
+                        "✚ ᴄʟɪᴄᴋ ʜᴇʀᴇ ᴛᴏ ᴀᴅᴅ ᴍᴇ", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
                 ],
            ]
         ),
