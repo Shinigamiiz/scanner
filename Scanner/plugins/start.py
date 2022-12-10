@@ -19,7 +19,10 @@ sree = TelegramClient(
 
 Owner = "iveL83"
 repo = "https://github.com"
-@sree.on(events.NewMessage(pattern="start"))
+@sree.on(
+    events.NewMessage(
+        pattern="/ginfo "
+    )
 async def start(event):
     buttns = [Button.url("••ѕυρροяτ••", "https://t.me/NezukoKamado"), Button.url("••ʀєρο••", f'{repo}')]
     py = platform.python_version()
