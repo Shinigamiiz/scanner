@@ -19,7 +19,7 @@ sree = TelegramClient(
 
 Owner = "iveL83"
 repo = "https://github.com"
-@sree.on(
+await @sree.on(
     events.NewMessage(
         pattern="/ginfo ")
     )
