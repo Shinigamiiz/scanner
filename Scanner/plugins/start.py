@@ -5,10 +5,8 @@ from os import getenv
 from dotenv import load_dotenv
 from telethon import TelegramClient, events, Button
 import telethon.utils
-from telethon.tl import functions
 from telethon import __version__ as tel
 from str import startxt2, startxt
-from datetime import datetime
 #Logging...
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
