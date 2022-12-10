@@ -1,8 +1,5 @@
 import logging
-import os
 import sys, platform
-from os import getenv
-from dotenv import load_dotenv
 from telethon import TelegramClient, events, Button
 import telethon.utils
 from telethon import __version__ as tel
