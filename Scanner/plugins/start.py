@@ -26,9 +26,6 @@ async def start_(client: Client, message: Message):
 
 I am a @SurveyCorpsXteam Scanner, I can Gban users in muiltiple bots at the same time.
 
-if user.id == SUDO_USERS:
-        text += "\n\n• Disaster Level: God⚡"
-
 Usage: 
     /start
     /scan -id (id) -r (reason)  -p (proof link)
