@@ -1,55 +1,67 @@
-from Scanner.plugins.stats import get_readable_time
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-
-import time
+import logging
+import re
+import os
+import sys, platform
+from asyncio import sleep
+from os import getenv
+from dotenv import load_dotenv
+from telethon import TelegramClient, events, Button
+import telethon.utils
+from telethon.tl import functions
+from telethon.tl.functions.channels import LeaveChannelRequest
+from asyncio import sleep
+from telethon import __version__ as tel
+from str import dad as gg, dady as g, startxt2, startxt, hlptxt
+from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
+from telethon.tl.functions.channels import EditBannedRequest
 from datetime import datetime
-
-from Scanner.utils.filters import command
-from Scanner.vars import SUPPORT_CHAT
-from Scanner import BOT_USERNAME, starttime
-
-START_TIME = datetime.utcnow()
-START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
-TIME_DURATION_UNITS = (
-    ("week", 60 * 60 * 24 * 7),
-    ("day", 60 * 60 * 24),
-    ("hour", 60 * 60),
-    ("min", 60),
-    ("sec", 1),
+#Logging...
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
+API_ID = int(getenv("API_ID", "4110592"))
+API_HASH = getenv("API_HASH", "aa7c849566922168031b95212860ede0")
+BOT_TOKEN = getenv("BOT_TOKEN", None)
+OWNER_ID = getenv("OWNER_ID", None)
+OP  = [int(g), int(gg), int(OWNER_ID)]
+#TelegramClient..
+sree = TelegramClient(
+    "BanAll",
+    api_id=API_ID,
+    api_hash=API_HASH
+).start(bot_token=BOT_TOKEN)
 
-@Client.on_message(command("start") & filters.private)
-async def start_(client: Client, message: Message):
-    await message.reply_text(
-        f"""ᴡᴇʟᴄᴏᴍᴇ : {message.from_user.mention()}
-
-I am a @SurveyCorpsXteam Scanner, I can Gban users in muiltiple bots at the same time.
-
-Usage: 
-    /start
-    /scan -id (id) -r (reason)  -p (proof link)
-    /revert -id (id)
-    /gscan (reason)
-    /grevert
-    /stats
-    /ping
-    /sudos
-""",
-    reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "👹Help👹", url=f"https://t.me/{SUPPORT_CHAT}"),
-                    InlineKeyboardButton(
-                        "👺Add Me To Your Chat👺", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
-                ],
-           ]
-        ),
-    )
-
-@Client.on_message(command("start") & ~filters.private)
-async def start_grp(client: Client, message: Message):
-    botuptime = get_readable_time((time.time() - starttime))
-    await message.reply_text(
-        f"Hey {message.from_user.mention()}, I'm here for you at {message.chat.title} since : `{botuptime}`")
+Owner = "iveL83"
+repo = "https://github.com"
+@sree.on(events.NewMessage(pattern="^/start"))
+async def start(event):
+    buttns = [Button.url("••ѕυρροяτ••", "https://t.me/NezukoKamado"), Button.url("••ʀєρο••", f'{repo}')]
+    py = platform.python_version()
+    if event.sender.id in OP:
+        await sree.send_file(
+            event.chat.id,
+            file="https://te.legra.ph/file/854e06992089ccb64557e.jpg",
+            caption=startxt.format(
+                event.sender.first_name,
+                event.sender.id,
+                py,
+                tel,
+                Owner,
+            ),
+            link_preview=False,
+            buttons=buttns
+        )
+    if event.sender.id not in OP:
+        await sree.send_file(
+            event.chat.id,
+            file="https://te.legra.ph/file/854e06992089ccb64557e.jpg",
+            caption=startxt2.format(
+                event.sender.first_name,
+                event.sender.id,
+                py,
+                tel,
+                Owner,
+            ),
+            link_preview=False,
+            buttons=buttns
+        )
