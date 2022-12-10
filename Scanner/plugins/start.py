@@ -8,13 +8,11 @@ import telethon.utils
 from telethon import __version__ as tel
 from str import startxt2, startxt
 from Scanner.vars import SUDO_USERS as OP
-from Scanner.vars import BOT_TOKEN
+from Scanner.vars import API_HASH, API_ID, BOT_TOKEN
 #Logging...
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
-API_ID = int(getenv("API_ID", "4110592"))
-API_HASH = getenv("API_HASH", "aa7c849566922168031b95212860ede0")
 #TelegramClient..
 sree = TelegramClient(
     "Gban",
