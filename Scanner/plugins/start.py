@@ -1,5 +1,4 @@
 import logging
-import re
 import os
 import sys, platform
 from os import getenv
