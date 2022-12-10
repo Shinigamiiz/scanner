@@ -3,7 +3,7 @@ import sys, platform
 from telethon import TelegramClient, events, Button
 import telethon.utils
 from telethon import __version__ as tel
-from str import startxt2, startxt
+from Scanner.str import startxt2, startxt
 from Scanner.vars import SUDO_USERS as OP
 from Scanner.vars import API_HASH, API_ID, BOT_TOKEN
 #Logging...
