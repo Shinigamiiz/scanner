@@ -11,7 +11,6 @@ from telethon.tl import functions
 from asyncio import sleep
 from telethon import __version__ as tel
 from str import startxt2, startxt
-from telethon.tl.functions.channels import EditBannedRequest
 from datetime import datetime
 #Logging...
 logging.basicConfig(
