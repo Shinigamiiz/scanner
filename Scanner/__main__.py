@@ -1,6 +1,7 @@
 import asyncio
 import os
 import requests
+from telegram import ParseMode
 
 from pyrogram import Client
 
