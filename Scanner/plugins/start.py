@@ -19,11 +19,11 @@ sree = TelegramClient(
 
 Owner = "iveL83"
 repo = "https://github.com"
-await @sree.on(
+@sree.on(
     events.NewMessage(
         pattern="/ginfo ")
     )
-async def start(event):
+await async def start(event):
     buttns = [Button.url("••ѕυρροяτ••", "https://t.me/NezukoKamado"), Button.url("••ʀєρο••", f'{repo}')]
     py = platform.python_version()
     if event.sender.id in OP:
