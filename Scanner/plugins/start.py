@@ -2,13 +2,11 @@ import logging
 import re
 import os
 import sys, platform
-from asyncio import sleep
 from os import getenv
 from dotenv import load_dotenv
 from telethon import TelegramClient, events, Button
 import telethon.utils
 from telethon.tl import functions
-from asyncio import sleep
 from telethon import __version__ as tel
 from str import startxt2, startxt
 from datetime import datetime
