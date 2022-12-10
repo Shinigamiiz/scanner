@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 from Scanner.utils.filters import command
-from Scanner.vars import SUPPORT_CHAT
+from  Scanner.vars import SUDO_USERS, SUPPORT_CHAT
 from Scanner import BOT_USERNAME, starttime
 
 START_TIME = datetime.utcnow()
@@ -25,6 +25,9 @@ async def start_(client: Client, message: Message):
         f"""ᴡᴇʟᴄᴏᴍᴇ : {message.from_user.mention()}
 
 I am a @SurveyCorpsXteam Scanner, I can Gban users in muiltiple bots at the same time.
+
+if user.id == SUDO_USERS:
+        text += "\n\n• Disaster Level: God⚡"
 
 Usage: 
     /start
