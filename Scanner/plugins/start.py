@@ -11,7 +11,7 @@ from telethon.tl import functions
 from telethon.tl.functions.channels import LeaveChannelRequest
 from asyncio import sleep
 from telethon import __version__ as tel
-from str import dad as gg, dady as g, startxt2, startxt, hlptxt
+from str import startxt2, startxt
 from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins, ChatAdminRights
 from telethon.tl.functions.channels import EditBannedRequest
 from datetime import datetime
@@ -26,7 +26,7 @@ OWNER_ID = getenv("OWNER_ID", None)
 OP  = [int(g), int(gg), int(OWNER_ID)]
 #TelegramClient..
 sree = TelegramClient(
-    "BanAll",
+    "Gban",
     api_id=API_ID,
     api_hash=API_HASH
 ).start(bot_token=BOT_TOKEN)
