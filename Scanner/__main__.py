@@ -3,6 +3,7 @@ import os
 import requests
 
 from pyrogram import Client
+from pyrogram.enums import ParseMode
 
 from Scanner import LOGGER, pbot, ubot, tbot
 from Scanner.db.global_bans_db import num_gbanned_users
