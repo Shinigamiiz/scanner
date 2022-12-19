@@ -25,7 +25,7 @@ BOT_TOKEN = "5722220703:AAFZZqkmvrdXXD9zCwsKSbU-AUWGEUVLQDg"
 API_ID = "13715737"
 API_HASH = "9b5ff18e133fed80f0f6cd7bf30cffdd"
 OWNER_ID = "5667156680"
-SUPPORT_CHAT = "WingsOfFreedom2"
+SUPPORT_CHAT = "Chizurubot2"
 MONGO_DB_URI = "mongodb+srv://eren:eren@cluster0.aor5rcv.mongodb.net/?retryWrites=true&w=majority"
-LOG_CHANNEL_ID = (-1001601632136)
+LOG_CHANNEL_ID = (-1001854008187)
 SUDO_USERS = "5667156680"
