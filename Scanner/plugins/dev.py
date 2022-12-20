@@ -1,6 +1,6 @@
 from Scanner import pbot
 from Scanner.vars import OWNER_ID, SUDO_USERS
-from pyrogram import Client, enums
+from pyrogram import Client
 from Scanner.utils.filters import command
 from pyrogram.types import Message
 
@@ -39,9 +39,9 @@ async def logs(_, message: Message):
 @Client.on_message(command(["sudos", "sudolist"]))
 async def sudolist(_, message: Message):
     m = await message.reply_text(
-        "<code>Gathering intel..</code>", parse_mode= enums.ParseMode.HTML
+        "<code>Gathering intel..</code>", parse_mode="html"
     )
-    img = "https://graph.org/file/a04dbd0fec420c964f546.mp4"
+    img = "https://telegra.ph/file/ee64f19caa9cee3cde865.mp4"
     true_dev = list(set(SUDO_USERS) - {OWNER_ID})
     reply = "<b>Sudo Users:</b>\n"
     for each_user in true_dev:
@@ -55,4 +55,4 @@ async def sudolist(_, message: Message):
             user = user_id
         reply += f"• {user}\n"
     await m.delete()
-    await message.reply_animation(img, caption=reply, parse_mode=enums.ParseMode.HTML)
+    await message.reply_animation(img, caption=reply, parse_mode="html")
