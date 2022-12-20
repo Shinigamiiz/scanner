@@ -33,7 +33,7 @@ async def load_start():
     
 
 loop = asyncio.new_event_loop()
-asyncio.get_event_loop()
+loop.run_until_complete(load_start())
 
 Client(
     name="SOME-1HING",
