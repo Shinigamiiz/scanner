@@ -1,6 +1,4 @@
 import asyncio
-from functools import wraps
-from asyncio.proactor_events import _ProactorBasePipeTransport
 import os
 import requests
 
@@ -12,19 +10,6 @@ from Scanner.db.global_bans_db import num_gbanned_users
 from Scanner.vars import API_ID, API_HASH, BOT_TOKEN, LOG_CHANNEL_ID
 
 DOWNLOAD_DIRECTORY = "/tmp"
-
-def silence_event_loop_closed(func):
-    @wraps(func)
-    def wrapper(self, *args, **kwargs):
-        try:
-            return func(self, *args, **kwargs)
-        except RuntimeError as e:
-            if str(e) != 'Event loop is closed':
-                raise
-    return wrapper
- 
-_ProactorBasePipeTransport.__del__ = silence_event_loop_closed(_ProactorBasePipeTransport.__del__)
-"""fix yelling at me error end"""
 
 async def load_start():
     count = num_gbanned_users()
@@ -47,8 +32,8 @@ async def load_start():
         LOGGER.info(f"UserBot wasn't able to semd message in your log channel.\n\nERROR: {e}")
     
 
-loop=asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+loop = asyncio.get_event_loop_policy().get_event_loop()
+loop.run_until_complete(load_start())
 
 Client(
     name="SOME-1HING",
