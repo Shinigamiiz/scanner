@@ -1,7 +1,8 @@
 from io import BytesIO
+import json
 
 from pyrogram.types import Message
-from pyrogram import Client
+from pyrogram import Client, filters, enums
 
 from Scanner import ASS_ID, BOT_ID, pbot, ubot
 from Scanner.vars import LOG_CHANNEL_ID, SUDO_USERS, GBAN_CHATS
@@ -29,7 +30,7 @@ async def scan(_, message: Message):
         await message.reply_text("id must be integer.")
         return
     except:
-        await message.reply_text("/scan -id (id) -r (reason)  -p (proof link)")
+        await message.reply_text("Format: `/scan -id (id) -r (reason)  -p (proof link)`")
         return
     if int(user_id) in SUDO_USERS:
         await message.reply_text(
@@ -97,7 +98,7 @@ async def revert(_, message: Message):
         except ValueError:
             await message.reply_text("id must be integer.")
         except:
-            await message.reply_text("/revert -id (id)")
+            await message.reply_text("Format: `/revert -id (id)`")
             return
     if not db.is_user_gbanned(user_id):
         await message.reply_text(f"User ID: {user_id} is not scanned.")
@@ -149,88 +150,78 @@ async def scanlist(_, message: Message):
             file_name="gbanlist.txt",
             caption="Here is the list of currently gbanned users.",
         )
-
-from telethon.tl.types import ChatBannedRights
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon import events
-from Scanner import tbot
-
-@tbot.on(events.NewMessage(pattern="^/gscan ?(.*)"))
-async def gscan(hmm):
-    if not hmm.is_group:
+        
+@Client.on_message(command("gscan") & filters.group)
+async def gscan(_, message: Message):
+    if message.from_user.id not in SUDO_USERS:
+        await message.reply_text(
+            "You need to be part of the Association to scan a user.",
+        )
         return
-    if hmm.is_group:
-        if hmm.sender_id not in SUDO_USERS:
-            return
-    res = hmm.pattern_match.group(1)
-    if not res:
-       await hmm.reply('Provide Some Reason')
+    
+    res = message.text
+    try:
+        Test = message.text.split(" ")
+        res = " ".join(Test[1:])
+        reason = f"{res}. Gscaned by {message.from_user.id}"
+    except IndexError:
+       await message.reply_text('Provide Some Reason')
        return
-    else:
-       reason = f"{res}. Gscaned by {hmm.sender_id}"
-    async for user in tbot.iter_participants(hmm.chat_id):
-        if not user.deleted and user.id not in SUDO_USERS and user.id != BOT_ID and user.id != ASS_ID and user.id not in [777000, 1087968824]:
+        
+    scanned = []
+    
+    async for userObject in pbot.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        myobject = json.loads(f"{userObject}")
+        user = myobject["user"]
+        if not user["is_deleted"]  and user['id'] not in SUDO_USERS and user['id'] != BOT_ID and user["id"] != ASS_ID and user['id'] not in [777000, 1087968824] and not user['is_bot']:
             try:
                 for chat_id in GBAN_CHATS:
                     await ubot.send_message(
                         chat_id,
-                        f"/gban {user.id} {reason}"
+                        f"/gban {user['id']} {reason}"
                     )
-                db.gban_user(user.id, hmm.sender_id, reason)
-                await hmm.reply(
-        f"""
-# GSCANNED
-User ID: {user.id}
-Reason: {reason}
+                db.gban_user(user['id'], message.from_user.id, reason)
+                scanned.append(user['id'])
+                
+            except Exception as e:
+                await message.reply_text(f"Error Ocurred: {e}")
+                
+    if scanned:
+        text = "# GSCANNED LIST\n"
+        for user_id in scanned:
+            text += f"• `{user_id}`\n"
+        text += f'GScanned By: {message.from_user.id}'
+        await message.reply_text(text)
+        await pbot.send_message(LOG_CHANNEL_ID, text)
 
-GScanned By: {hmm.sender_id}
-"""
-    )
-                await pbot.send_message(
-                    LOG_CHANNEL_ID,
-        f"""
-# GSCANNED
-User ID: {user.id}
-Reason: {reason}
-
-GScanned By: {hmm.sender_id}
-"""
-    )
-            except:
-                pass
-            
-@tbot.on(events.NewMessage(pattern="^/grevert ?(.*)"))
-async def grevert(hmm):
-    if not hmm.is_group:
+@Client.on_message(command("grevert") & filters.group)
+async def grevert(_, message: Message):
+    if message.from_user.id not in SUDO_USERS:
+        await message.reply_text(
+            "You need to be part of the Association to scan a user.",
+        )
         return
-    if hmm.is_group:
-        if hmm.sender_id not in SUDO_USERS:
-            return
-    async for user in tbot.iter_participants(hmm.chat_id):
-        if not user.deleted and user.id not in [777000, 1087968824]:
-            try:
-                for chat_id in GBAN_CHATS:
-                    await ubot.send_message(
-                        chat_id,
-                        f"/ungban {user.id}"
-                    )
-                db.ungban_user(user.id)
-                await hmm.reply(
-        f"""
-# GREVERTED
-User ID: {user.id}
-
-GReverted By: {hmm.sender_id}
-"""
-    )
-                await pbot.send_message(
-                    LOG_CHANNEL_ID,
-        f"""
-# GREVERTED
-User ID: {user.id}
-
-GReverted By: {hmm.sender_id}
-"""
-    )
-            except:
-                pass
+    reverted = []
+    async for userObject in pbot.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        myobject = json.loads(f"{userObject}")
+        user = myobject["user"]
+        if not user["is_deleted"]  and user['id'] not in SUDO_USERS and user['id'] != BOT_ID and user["id"] != ASS_ID and user['id'] not in [777000, 1087968824] and not user['is_bot']:
+            if db.is_user_gbanned(user['id']):
+                try:
+                    for chat_id in GBAN_CHATS:
+                        
+                        await ubot.send_message(
+                            chat_id,
+                            f"/ungban {user['id']}"
+                        )
+                    db.ungban_user(user['id'])
+                    reverted.append(user['id'])
+                except:
+                    pass
+    if reverted:
+        text = "# GREVERT LIST\n"
+        for user_id in reverted:
+            text += f"• `{user_id}`\n"
+        text += f'GRevert By: {message.from_user.id}'
+        await message.reply_text(text)
+        await pbot.send_message(LOG_CHANNEL_ID, text)
