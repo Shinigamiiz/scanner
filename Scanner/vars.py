@@ -28,4 +28,4 @@ OWNER_ID = "5667156680"
 SUPPORT_CHAT = "Chizurubot2"
 MONGO_DB_URI = "mongodb+srv://eren:eren@cluster0.aor5rcv.mongodb.net/?retryWrites=true&w=majority"
 LOG_CHANNEL_ID = (-1001854008187)
-SUDO_USERS = "5667156680"
+SUDO_USERS = 5667156680
