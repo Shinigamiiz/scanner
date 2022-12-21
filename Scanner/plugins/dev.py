@@ -1,4 +1,3 @@
-import html
 from Scanner import pbot
 from Scanner.vars import OWNER_ID, SUDO_USERS
 from pyrogram import Client, enums
@@ -56,4 +55,4 @@ async def sudolist(_, message: Message):
             user = user_id
         reply += f"• {user}\n"
     await m.delete()
-    await message.reply_animation(img, caption=reply, parse_mode= enums.ParseMode.HTML)
+    await message.reply_animation(img, caption=reply, parse_mode=enums.ParseMode.HTML)
