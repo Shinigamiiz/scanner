@@ -1,7 +1,7 @@
 import html
 from Scanner import pbot
 from Scanner.vars import OWNER_ID, SUDO_USERS
-from pyrogram import Client
+from pyrogram import Client, enums
 from Scanner.utils.filters import command
 from pyrogram.types import Message
 
