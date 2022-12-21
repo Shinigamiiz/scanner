@@ -1,3 +1,4 @@
+import html
 from Scanner import pbot
 from Scanner.vars import OWNER_ID, SUDO_USERS
 from pyrogram import Client
